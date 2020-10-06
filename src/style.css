@@ -15,6 +15,10 @@ main{
     display: none;
 }
 
+li{
+    list-style: none;
+}
+
 .container{
     border: 7px solid #394648;
     border-radius: 10px;
