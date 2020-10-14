@@ -1,5 +1,8 @@
 # dominic-mills-bookmarkApp https://thinkful-ei-shark.github.io/dominic-mills-bookmarkApp/
 
+
+Here is an app created to save bookmarks. It's a single page app developed using jQuery as a project for Thinkful, using a Thinkful API. Below you'll find a user story that illustrates the need for the bookmark app and the flow that the app will take you through. 
+
 As a user:
 
     I can add bookmarks to my bookmark list. Bookmarks contain:
