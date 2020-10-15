@@ -24,7 +24,6 @@ const bookmarkStartTemplate = function () {
                 <ul>
                 ${generateBookmarkElementString(filteredBookmarks)}
                 </ul>
-            </div>
             `
             
     return html
