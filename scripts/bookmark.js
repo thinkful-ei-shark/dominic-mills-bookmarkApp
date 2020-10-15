@@ -7,10 +7,12 @@ import store from './store';
 const bookmarkStartTemplate = function () {
     const filteredBookmarks = store.bookmarks.filter(x => {return x.rating >= store.filter})
     let html = `<div class="container">
-                <h1>My Bookmarks</h1>
+            <header>
+            <h1>My Bookmarks</h1>
+            </header>
                 <section>
-                    <button class="button" id="new-bookmark">New</button>
-                    <select class="button" id="filter-bookmark" placeholder="Filter">
+                    <button tabindex="1" class="button" id="new-bookmark">New</button>
+                    <label for="filter-bookmark">Filter</label><select tabindex="1" class="button" id="filter-bookmark" placeholder="Filter">
                         <option value="" disabled="" selected="" hidden="">Filter By</option>
                         <option value="1">1</option>
                         <option value="2">2 </option>
@@ -19,10 +21,9 @@ const bookmarkStartTemplate = function () {
                         <option value="5">5 </option>
                     </select>
                 </section>
-                <div>
+                <ul>
                 ${generateBookmarkElementString(filteredBookmarks)}
-                </div>
-            </div>
+                </ul>
             `
             
     return html
@@ -30,23 +31,23 @@ const bookmarkStartTemplate = function () {
 //${generateBookmarkElementString(store.bookmarks)}
 const generateBookmarkElements = (bookmark) => {
 
-    return   `<div class='bookmarks' data-item-id="${bookmark.id}">
-                <div id="expand">
+    return   `<li class='bookmarks' data-item-id="${bookmark.id}">
+                <div class="expand" tabindex="1">
 
                     ${bookmark.title}      |     Rating: ${bookmark.rating}
                 </div>
-                <section class="biggysmalls hidden">
+                <section class="biggysmalls ${ (bookmark.expanded) ? "" : "hidden" }">
                 <div>
-                    <button class="smallbutton" id="visit-bookmark">Visit</button>
+                    <button tabindex="1" class="smallbutton" id="visit-bookmark">Visit</button>
                 </div>
                 <div>
                     ${bookmark.desc}
                 </div>
                 <div>
-                    <button class="smallbutton" id="delete-bookmark">Delete</button>
+                    <button tabindex="1" class="smallbutton" id="delete-bookmark">Delete</button>
                 </div>
                 </section>
-            </div>`;
+            </li>`;
 
 
            
@@ -62,21 +63,22 @@ const addBookmarkTemplate = function () {
     let html = `<div class="container">
     <h1>My Bookmarks</h1>
     <form class="form" id="create-new-bookmark" action="text" required>Add Your Bookmark
-        <section><input type="text" class="text-box" id="bookmark-url" value="https://www.google.com/"></section>
+        <section><label for="bookmark-url">URL</label><input tabindex="1" type="text" class="text-box" id="bookmark-url" value="https://www.google.com/"></section>
         <div>
-        <select class="button" id="bookmark-rating" required>
-            <option value="" disabled="" selected="" hidden="">Rating</option>
-            <option value="1">1 </option>
-            <option value="2">2 </option>
-            <option value="3">3 </option>
-            <option value="4">4 </option>
-            <option value="5">5 </option>
+            <select tabindex="1" class="button" id="bookmark-rating" required>
+                <option value="" disabled="" selected="" hidden="">Rating</option>
+                <option value="1">1 </option>
+                <option value="2">2 </option>
+                <option value="3">3 </option>
+                <option value="4">4 </option>
+                <option value="5">5 </option>
+            </select>
         </div>
-        <section><input type="text" class="text-box" id="bookmark-title" placeholder="Bookmark Title" required></section>
-        <section><textarea type="text" class="text-box" id="bookmark-description" placeholder="Description " required></textarea>
+        <section><label for="bookmark-title">Title</label><input tabindex="1" type="text" class="text-box" id="bookmark-title" placeholder="Bookmark Title" required></section>
+        <section><label for="bookmark-description">Description</label><textarea tabindex="1" type="text" class="text-box" id="bookmark-description" placeholder="Description " required></textarea>
         </section>
-        <button class="button" id="cancel-bookmark">Cancel</button>
-        <button class="button" id="enter-bookmark">Enter</button>
+        <button tabindex="1" class="button" id="cancel-bookmark">Cancel</button>
+        <button tabindex="1" class="button" id="enter-bookmark">Enter</button>
     </form>
 </div>`
 return html
@@ -156,8 +158,13 @@ const handleNewSubmit = function () {
 }
 
 const handleExpandClicked = function(){
-    $('main').on('click', "#expand", function() {
-        $(this).parent().find('.biggysmalls').toggleClass('hidden')
+    $('main').on('click', ".expand", function() {
+        let parentId = $(this).parent().data('item-id')
+        let theBookmark = store.bookmarks.find(bookmark => {
+            return bookmark.id === parentId
+        })
+        theBookmark.expanded = !theBookmark.expanded
+        render()
       });
 }
 
