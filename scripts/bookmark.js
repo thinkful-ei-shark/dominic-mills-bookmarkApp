@@ -63,7 +63,7 @@ const addBookmarkTemplate = function () {
     let html = `<div class="container">
     <h1>My Bookmarks</h1>
     <form class="form" id="create-new-bookmark" action="text" required>Add Your Bookmark
-        <section><label for="bookmark-url">URL</label><input tabindex="1" type="text" class="text-box" id="bookmark-url" value="https://www.google.com/"></section>
+        <section><label for="bookmark-url">URL</label><input tabindex="1" type="text" class="text-box" id="bookmark-url" placeholder="https://www.google.com/"></section>
         <div>
             <select tabindex="1" class="button" id="bookmark-rating" required>
                 <option value="" disabled="" selected="" hidden="">Rating</option>
